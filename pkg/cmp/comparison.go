@@ -6,15 +6,11 @@ import (
 	"strings"
 )
 
-func Diff(logLine interface{}, bqschema map[string]string, ignore, target string) ([]string, bool) {
+func Diff(logLine map[string]interface{}, bqschema map[string]string, ignore, target string) ([]string, bool) {
 	var diffs []string
 	exist := false
-	m, ok := logLine.(map[string]interface{})
-	if !ok {
-		return []string{fmt.Sprintf("-------- orig %s", logLine)}, exist
-	}
 
-	for k, v := range m {
+	for k, v := range logLine {
 		if k == ignore || k != target && target != "" {
 			continue
 		}

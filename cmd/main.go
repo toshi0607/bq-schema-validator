@@ -82,10 +82,10 @@ func realMain(_ []string) int {
 	d := json.NewDecoder(r)
 
 	fmt.Println("-----------------------------")
-	fmt.Printf("bqschema: %s\n", bqschema)
+	fmt.Printf("current schema for %s dataset: %s\n", c.DatasetID, bqschema)
 	fmt.Println("-----------------------------")
 	for {
-		var result interface{}
+		var result map[string]interface{}
 		if err := d.Decode(&result); err == io.EOF {
 			break
 		} else if err != nil {
