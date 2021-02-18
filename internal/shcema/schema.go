@@ -17,15 +17,15 @@ func Schema(ctx context.Context, projectID, datasetID, tableID string) (map[stri
 		return nil, err
 	}
 
-	bqschema := make(map[string]string, len(meta.Schema))
+	s := make(map[string]string, len(meta.Schema))
 	fs := []*bigquery.FieldSchema(meta.Schema)
 	for _, v := range fs {
 		if v.Name == "jsonPayload" {
 			fss := []*bigquery.FieldSchema(v.Schema)
 			for _, v := range fss {
-				bqschema[v.Name] = string(v.Type)
+				s[v.Name] = string(v.Type)
 			}
 		}
 	}
-	return bqschema, nil
+	return s, nil
 }

@@ -50,32 +50,30 @@ func realMain(_ []string) int {
 	if c.File != "" {
 		j, err := ioutil.ReadFile(c.File)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			fmt.Println(fmt.Errorf("failed to read the file, path: %s, error: %v", c.File, err))
+			return exitError
 		}
 		r = bytes.NewReader(j)
 	} else {
 		r = bufio.NewReader(os.Stdin)
-		bufio.NewReader(os.Stdin)
 	}
-	d := json.NewDecoder(r)
 
 	fmt.Println("-----------------------------")
-	fmt.Printf("current schema for %s dataset: %s\n", c.DatasetID, s)
+	fmt.Printf("current schema for the %s dataset: %s\n", c.DatasetID, s)
 	fmt.Println("-----------------------------")
 	for {
 		var result map[string]interface{}
-		if err := d.Decode(&result); err == io.EOF {
+		if err := json.NewDecoder(r).Decode(&result); err == io.EOF {
 			break
 		} else if err != nil {
-			fmt.Println("Skip the non structured log")
+			fmt.Println("skip the non structured log")
 			continue
 		}
 		ds, ok := cmp.Diff(result, s, c.Ignore, c.Target)
 		if ok {
 			fmt.Println(ds)
 			fmt.Println("-----------------------------")
-			fmt.Printf("Log line: %s\n", result)
+			fmt.Printf("log line: %s\n", result)
 			fmt.Println("-----------------------------")
 		}
 	}
