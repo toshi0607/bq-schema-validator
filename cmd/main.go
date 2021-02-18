@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"cloud.google.com/go/bigquery"
 	"context"
 	"encoding/json"
 	"flag"
@@ -14,6 +13,7 @@ import (
 	"os"
 
 	"toshi0607/bq-schema-validator/v2/internal/config"
+	"toshi0607/bq-schema-validator/v2/internal/shcema"
 	"toshi0607/bq-schema-validator/v2/pkg/cmp"
 )
 
@@ -40,31 +40,10 @@ func realMain(_ []string) int {
 		return exitError
 	}
 
-	client, err := bigquery.NewClient(ctx, c.GCPProjectID)
+	s, err := schema.Schema(ctx, c.GCPProjectID, c.DatasetID, c.TableID)
 	if err != nil {
-		fmt.Println(fmt.Errorf("bigquery.NewClient: %v", err))
-		os.Exit(1)
-	}
-	defer client.Close()
-
-	meta, err := client.Dataset(c.DatasetID).Table(c.TableID).Metadata(ctx)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	w := os.Stdout
-	fmt.Fprintf(w, "Schema has %d top-level fields\n", len(meta.Schema))
-
-	bqschema := make(map[string]string, len(meta.Schema))
-	fs := []*bigquery.FieldSchema(meta.Schema)
-	for _, v := range fs {
-		if v.Name == "jsonPayload" {
-			fss := []*bigquery.FieldSchema(v.Schema)
-			for _, v := range fss {
-				bqschema[v.Name] = string(v.Type)
-			}
-		}
+		fmt.Println(fmt.Errorf("failed to get the schema, error: %v", err))
+		return exitError
 	}
 
 	var r io.Reader
@@ -82,7 +61,7 @@ func realMain(_ []string) int {
 	d := json.NewDecoder(r)
 
 	fmt.Println("-----------------------------")
-	fmt.Printf("current schema for %s dataset: %s\n", c.DatasetID, bqschema)
+	fmt.Printf("current schema for %s dataset: %s\n", c.DatasetID, s)
 	fmt.Println("-----------------------------")
 	for {
 		var result map[string]interface{}
@@ -92,7 +71,7 @@ func realMain(_ []string) int {
 			fmt.Println("Skip the non structured log")
 			continue
 		}
-		ds, ok := cmp.Diff(result, bqschema, c.Ignore, c.Target)
+		ds, ok := cmp.Diff(result, s, c.Ignore, c.Target)
 		if ok {
 			fmt.Println(ds)
 			fmt.Println("-----------------------------")
