@@ -27,6 +27,16 @@ func TestDiff(t *testing.T) {
 			},
 			wantDiff: false,
 		},
+		"different schema": {
+			file: "../../testdata/no_diff.json",
+			schema: map[string]string{
+				"level":   "STRING",
+				"ts":      "FLOAT",
+				"call_id": "STRING",
+				"ff":      "STRING",
+			},
+			wantDiff: true,
+		},
 		"unexpected log field": {
 			file: "../../testdata/unexpected_log_field.json",
 			schema: map[string]string{
