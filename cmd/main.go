@@ -24,8 +24,8 @@ const (
 
 // These variables are set in build step
 var (
-	Version  = "unset" //nolint:golint,unused
-	Revision = "unset" //nolint:golint,unused
+	Version  = "unset" //nolint:deadcode
+	Revision = "unset" //nolint:deadcode
 )
 
 func main() {
