@@ -13,7 +13,7 @@ import (
 	"os"
 
 	"toshi0607/bq-schema-validator/v2/internal/config"
-	"toshi0607/bq-schema-validator/v2/internal/shcema"
+	schema "toshi0607/bq-schema-validator/v2/internal/shcema"
 	"toshi0607/bq-schema-validator/v2/pkg/cmp"
 )
 
@@ -55,6 +55,17 @@ func realMain(_ []string) int {
 		}
 		r = bytes.NewReader(j)
 	} else {
+		stat, err := os.Stdin.Stat()
+		if err != nil {
+			fmt.Println(fmt.Errorf("failed to stat stdin, error: %v", err))
+			return exitError
+		}
+		if (stat.Mode() & os.ModeNamedPipe) == 0 {
+			fmt.Println("input from stdin is required without file input like this:")
+			fmt.Println("kubectl logs [pod name] | bq-schema-validator  -project x -dataset y -table z")
+			flag.Usage()
+			return exitError
+		}
 		r = bufio.NewReader(os.Stdin)
 	}
 
@@ -66,7 +77,7 @@ func realMain(_ []string) int {
 		if err := json.NewDecoder(r).Decode(&result); err == io.EOF {
 			break
 		} else if err != nil {
-			fmt.Println("skip the non structured log")
+			// fmt.Println("skip the non structured log")
 			continue
 		}
 		ds, ok := cmp.Diff(result, s, c.Ignore, c.Target)
