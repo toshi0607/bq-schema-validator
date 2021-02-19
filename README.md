@@ -1,5 +1,7 @@
 # bq-schema-validator
 
+[![ci](https://github.com/toshi0607/bq-schema-validator/actions/workflows/ci.yaml/badge.svg)](https://github.com/toshi0607/bq-schema-validator/actions/workflows/ci.yaml)
+
 ## Description
 
 bq-schema-validator is a CLI tool to detect the log entry that causes a BigQuery table schema error via log sink.

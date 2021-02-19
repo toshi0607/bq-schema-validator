@@ -3,6 +3,7 @@ package schema
 import (
 	"cloud.google.com/go/bigquery"
 	"context"
+	"fmt"
 )
 
 func Schema(ctx context.Context, projectID, datasetID, tableID string) (map[string]string, error) {
@@ -10,7 +11,11 @@ func Schema(ctx context.Context, projectID, datasetID, tableID string) (map[stri
 	if err != nil {
 		return nil, err
 	}
-	defer client.Close()
+	defer func() {
+		if err := client.Close(); err != nil {
+			fmt.Println("failed to close the bq client")
+		}
+	}()
 
 	meta, err := client.Dataset(datasetID).Table(tableID).Metadata(ctx)
 	if err != nil {

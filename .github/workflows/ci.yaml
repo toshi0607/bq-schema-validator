@@ -5,9 +5,9 @@ on:
   push:
     tags:
       - v*
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -23,16 +23,13 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: dependencies
-        run: go get -v -t -d ./...
-
-      - name: build
-        run: go build -v cmd/main.go
-
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v1
+        uses: golangci/golangci-lint-action@v2
         with:
-          version: v1.30
+          version: v1.29
 
       - name: test
         run: go test ./... -v
+
+      - name: build
+        run: go build -v cmd/main.go

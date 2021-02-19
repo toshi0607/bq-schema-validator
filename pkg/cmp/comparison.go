@@ -48,8 +48,5 @@ func isSameType(log, schema string) bool {
 		"bool":                   "BOOLEAN",
 	}
 
-	if m[log] == schema {
-		return true
-	}
-	return false
+	return m[log] == schema
 }
