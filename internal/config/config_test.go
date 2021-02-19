@@ -43,12 +43,12 @@ func TestConfig_Init(t *testing.T) {
 	}
 	for name, te := range tests {
 		te := te
-		flag.CommandLine.Set("file", te.args["file"])
-		flag.CommandLine.Set("project", te.args["project"])
-		flag.CommandLine.Set("table", te.args["table"])
-		flag.CommandLine.Set("dataset", te.args["dataset"])
-		flag.CommandLine.Set("ignore", te.args["ignore"])
-		flag.CommandLine.Set("target", te.args["target"])
+		_ = flag.CommandLine.Set("file", te.args["file"])
+		_ = flag.CommandLine.Set("project", te.args["project"])
+		_ = flag.CommandLine.Set("table", te.args["table"])
+		_ = flag.CommandLine.Set("dataset", te.args["dataset"])
+		_ = flag.CommandLine.Set("ignore", te.args["ignore"])
+		_ = flag.CommandLine.Set("target", te.args["target"])
 
 		got, err := New().Init()
 
