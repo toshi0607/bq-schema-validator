@@ -42,6 +42,17 @@ $ bq-schema-validator -project GCP_PROJECT_ID -dataset BIGQUERY_DATASET_ID -tabl
         [Optional] Target field when comparing log and schema
 ```
 
+## Installation
+
+Download the binary from [GitHub Releases][release] and drop it in your `$PATH`.
+
+- [Darwin / Mac][release]
+- [Linux][release]
+
+## License
+
+[MIT][license]
+
 ## Reference
 
 Data types in BigQuery schema
