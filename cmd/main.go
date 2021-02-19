@@ -13,7 +13,7 @@ import (
 	"os"
 
 	"toshi0607/bq-schema-validator/v2/internal/config"
-	schema "toshi0607/bq-schema-validator/v2/internal/shcema"
+	"toshi0607/bq-schema-validator/v2/internal/schema"
 	"toshi0607/bq-schema-validator/v2/pkg/cmp"
 )
 
