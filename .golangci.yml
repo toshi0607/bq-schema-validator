@@ -1,0 +1,3 @@
+# https://golangci-lint.run/usage/configuration/#config-file
+issues:
+  exclude-use-default: false
