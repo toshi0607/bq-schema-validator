@@ -4,10 +4,16 @@
 
 bq-schema-validator is a CLI tool to detect the log entry that causes a BigQuery table schema error via log sink.
 
+## Prerequisites
+
+* Permission to view the container log
+* Permission to view the table schema (`roles/bigquery.dataViewer` for the GCP project)
+* `gcloud auth application-default login`
+
 ## Usage
 
 ```console
-$ kubectl kogs POD_NAME [CONTAINER_NAME] | bq-schema-validator -project GCP_PROJECT_ID -dataset BIGQUERY_DATASET_ID -table TABLE_ID
+$ kubectl logs POD_NAME [CONTAINER_NAME] | bq-schema-validator -project GCP_PROJECT_ID -dataset BIGQUERY_DATASET_ID -table TABLE_ID
 
 $ bq-schema-validator -project GCP_PROJECT_ID -dataset BIGQUERY_DATASET_ID -table TABLE_ID -file FILE_PATH_FOR_CONTAINER_LOGS
 ```
