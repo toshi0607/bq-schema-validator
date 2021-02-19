@@ -22,6 +22,12 @@ const (
 	exitError = 1
 )
 
+// These variables are set in build step
+var (
+	Version  = "unset" //nolint:deadcode,unused
+	Revision = "unset" //nolint:deadcode,unused
+)
+
 func main() {
 	defer func() {
 		if err := recover(); err != nil {
