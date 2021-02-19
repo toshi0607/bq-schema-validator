@@ -6,6 +6,7 @@ import (
 )
 
 func TestConfig_Init(t *testing.T) {
+	t.Helper()
 	testing.Init()
 	tests := map[string]struct {
 		args          map[string]string
@@ -40,10 +41,8 @@ func TestConfig_Init(t *testing.T) {
 			wantError:     false,
 		},
 	}
-
 	for name, te := range tests {
 		te := te
-
 		flag.CommandLine.Set("file", te.args["file"])
 		flag.CommandLine.Set("project", te.args["project"])
 		flag.CommandLine.Set("table", te.args["table"])
@@ -52,13 +51,13 @@ func TestConfig_Init(t *testing.T) {
 		flag.CommandLine.Set("target", te.args["target"])
 
 		got, err := New().Init()
+
 		if !te.wantError && err != nil {
 			t.Error(err)
 		}
 		if te.wantError {
 			continue
 		}
-
 		if got.GCPProjectID != te.wantProjectID {
 			t.Errorf("[%s] got: %s, want: %s", name, got, te.wantProjectID)
 		}
