@@ -3,6 +3,8 @@ package config
 import (
 	"errors"
 	"flag"
+
+	_ "testing" // for arranging import order for test
 )
 
 type Config struct {
@@ -30,10 +32,10 @@ func init() {
 	flag.StringVar(&tableID, "table", "", "[Required] A name of BigQuery table")
 	flag.StringVar(&ignore, "ignore", "", "[Optional] Ignore field when comparing log and schema")
 	flag.StringVar(&target, "target", "", "[Optional] Target field when comparing log and schema")
-	flag.Parse()
 }
 
 func New() *Config {
+	flag.Parse()
 	return &Config{
 		GCPProjectID: projectID,
 		DatasetID:    datasetID,
