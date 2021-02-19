@@ -4,6 +4,11 @@
 
 bq-schema-validator is a CLI tool to detect the log entry that causes a BigQuery table schema error via log sink.
 
+BigQuery creates a schema (field, type, etc) in a table when a log router sends container logs to the table for the first time. If the type of field sent to the table is different from original one, a log sink error takes place. For example, a log including `log_id` field which is string type is sent and then type is changed to int in the application. When the log is sent, the error occurs due to a type mismatch, so we need to detect the change. But, we only can see the error via an email and an activity stream when it happens for the first time so that it's hard to find.
+
+To solve this issue, this CLI detects the log of which field type is different from the existing type in the schema. As fsr as I know, the schema mismatch usually happens at a top level field, so nested fields aren't checked.
+
+
 ## Prerequisites
 
 * Permission to view the container log
