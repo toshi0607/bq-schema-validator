@@ -44,14 +44,14 @@ $ bq-schema-validator -project GCP_PROJECT_ID -dataset BIGQUERY_DATASET_ID -tabl
 
 ## Installation
 
-Download the binary from [GitHub Releases][https://github.com/toshi0607/bq-schema-validator/releases] and drop it in your `$PATH`.
+Download the binary from [GitHub Releases](https://github.com/toshi0607/bq-schema-validator/releases) and drop it in your `$PATH`
 
-- [Darwin / Mac][https://github.com/toshi0607/bq-schema-validator/releases/latest]
-- [Linux][https://github.com/toshi0607/bq-schema-validator/releases/latest]
+- [Darwin / Mac](https://github.com/toshi0607/bq-schema-validator/releases/latest)
+- [Linux](https://github.com/toshi0607/bq-schema-validator/releases/latest)
 
 ## License
 
-[MIT][./LICENSE]
+[MIT](./LICENSE)
 
 ## Reference
 
