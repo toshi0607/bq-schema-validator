@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
+	"os"
 	"testing"
 )
 
@@ -91,7 +91,7 @@ func TestDiff(t *testing.T) {
 }
 
 func Setup(t *testing.T, filePath string) io.Reader {
-	j, err := ioutil.ReadFile(filePath)
+	j, err := os.ReadFile(filePath)
 	if err != nil {
 		t.Fatalf("failed to read the file, path: %s, error: %v", filePath, err)
 	}

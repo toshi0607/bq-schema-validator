@@ -8,7 +8,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -24,8 +23,8 @@ const (
 
 // These variables are set in build step
 var (
-	Version  = "unset" //nolint:deadcode,unused
-	Revision = "unset" //nolint:deadcode,unused
+	Version  = "unset" //nolint:unused
+	Revision = "unset" //nolint:unused
 )
 
 func main() {
@@ -54,7 +53,7 @@ func realMain(_ []string) int {
 
 	var r io.Reader
 	if c.File != "" {
-		j, err := ioutil.ReadFile(c.File)
+		j, err := os.ReadFile(c.File)
 		if err != nil {
 			fmt.Println(fmt.Errorf("failed to read the file, path: %s, error: %v", c.File, err))
 			return exitError

@@ -1,3 +1,15 @@
-# https://golangci-lint.run/usage/configuration/#config-file
-issues:
-  exclude-use-default: false
+version: "2"
+linters:
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
