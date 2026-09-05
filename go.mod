@@ -2,7 +2,7 @@ module toshi0607/bq-schema-validator/v2
 
 go 1.25.0
 
-require cloud.google.com/go/bigquery v1.81.0
+require cloud.google.com/go/bigquery v1.82.0
 
 require (
 	cloud.google.com/go v0.123.0 // indirect
